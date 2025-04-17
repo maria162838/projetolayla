@@ -4,7 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Layla Design</title>
+
   <link rel="stylesheet" href="estilo.css">
+
+  <!-- link do bootstrap: vai permitir usar os links do bootstrap sem precisar
+   baixar imagens -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+   <script src="main.js" defer></script>
 </head>
 <body>
   <header>
@@ -57,4 +64,154 @@
       <h2>Contato</h2>
       <p>Agende seu horário pelo WhatsApp ou nos siga no Instagram para acompanhar meu trabalho!</p>
       <a class="botao" href="https://wa.me/seunumero" target="_blank">WhatsApp</a>
-      <a class="botao" href="https://instagram.com/seuusuario
+      <a class="botao" href="https://instagram.com/seuusuario"></a>
+
+    </section>
+
+
+
+    <!-- seção do formulário de agendamento: Cauã 
+
+     Objetivo: criar formulário que pegue os inputs e transforme 
+     em uma mensagem para whatsapp -->
+
+     <section class="formulario_section">
+
+      <form action="" class="formulario_container">
+        <section class="info_section">
+          <header class="info_header">
+            <i class="bi bi-person info_icone_titulo"></i>
+            <h3 class="info_title">Informações de Contato</h3>
+          </header>
+
+          <label for="name" class="label_container">
+            <p class="label_descricao">Nome</p>
+            <input type="text" name="name" id="user_name" required>
+
+            <span class="input_mensagem"></span>
+            <!-- span necessário para exibir mensagens de erro dinamicamente -->
+          </label>
+
+          <label for="tel" class="label_container">
+            <p class="label_descricao">Whatsapp</p>
+            <input type="tel" name="tel" id="user_tel" required>
+            <span class="input_mensagem"></span>
+          </label>
+        </section><!-- fim de informações de contato -->
+
+        <section class="info_section">
+          <header class="info_header">
+            <i class="bi bi-person info_icone_titulo"></i>
+            <h3 class="info_title">Serviços Prestados</h3>
+            
+          </header>
+
+          <section class="info_servicos_container">
+            <section class="contador_servicos_container">
+              <p class="info_descricao">Você pode escolher até 2 serviços</p>
+              <span class="contador_servicos">0/2</span>
+            </section>
+
+            <h4 class="servicos_titulo_formulario">Desgin de Sobrancelhas</h4>
+            <section class="service_type_container">
+              <label for="simple" class="label_container_checkbox">
+                <input type="checkbox" name="simple" id="eyebrow_simple">
+                <p class="label_checkbox_descricao">Design simples</p>
+              </label>
+              <label for="henna" class="label_container_checkbox">
+                <input type="checkbox" name="henna" id="eyebrow_henna">
+                <p class="label_checkbox_descricao">Design com henna</p>
+              </label>
+              <label for="lamination" class="label_container_checkbox">
+                <input type="checkbox" name="lamination" id="eyebrow_lamination">
+                <p class="label_checkbox_descricao"><lang lang="en">Brown lamination</lang></p>
+              </label>
+            </section>
+          </section> <!-- fim de design de sobrancelhas -->
+
+          <section class="info_servicos_container">
+            <h4 class="servicos_titulo_formulario">Extensão de Cílios</h4>
+            <section class="service_type_container">
+              <label for="tuft" class="label_container_checkbox">
+                <input type="checkbox" name="tuft" id="eyelash_tuft">
+                <p class="label_checkbox_descricao">Tufo de seda</p>
+              </label>
+
+              <label for="brasilian" class="label_container_checkbox">
+                <input type="checkbox" name="brasilian" id="eyelash_brasilian">
+                <p class="label_checkbox_descricao">Volume brasileiro</p>
+              </label>
+
+              <label for="egyptian" class="label_container_checkbox">
+                <input type="checkbox" name="egyptian" id="eyelash_egyptian">
+                <p class="label_checkbox_descricao">Volume egípcio</p>
+              </label>
+
+              <label for="russian" class="label_container_checkbox">
+                <input type="checkbox" name="russian" id="eyelash_russian">
+                <p class="label_checkbox_descricao">Volume russo</p>
+              </label>
+              
+            </section>
+          </section> <!-- fim de extensão de cílios  -->
+
+        </section><!-- fim de serviços -->
+
+        <section class="info_section">
+          <header class="info_header">
+            <i class="bi bi-calendar-week info_icone_titulo"></i>
+            <h3 class="info_title">Agende seu horário</h3>
+          </header>
+
+          <label for="calendar" class="label_container">
+            <p class="label_description">Escolha a data</p>
+            <input type="date" name="calendar" id="calendar_input" required>
+          </label>
+
+          <section class="horarios_container">
+            <p class="label_description">Escolha o melhor horário</p>
+
+            <div class="buttons_container">
+              <button class="time_button" id="morning">Manhã</button>
+              <button class="time_button" id="afternoon">Tarde</button>
+              <button class="time_button" id="night">Noite</button>
+
+              
+            </div>
+
+            <footer class="footer_horario_formulario">
+              <label for="allday" class="horario_label">
+                <p class="label_checkbox_description">Estou livre o dia todo</p>
+                <input type="checkbox" name="allday" id="time_allday">
+              </label>
+            </footer>
+          </section> <!-- fim de horarios -->
+        </section><!-- fim de agendamento-->
+
+        <section class="info_section">
+          <header class="info_header">
+            <i class="bi bi-chat-square-dots info_icone_titulo"></i>
+            <h3 class="info_title"> Observações</h3>
+          </header>
+
+          <label for="message" class="message_label">
+            <p class="message_description">Escreva sua menssagem abaixo</p>
+            <textarea name="message" id="user_message" maxlength="200" class="message_user" placeholder="Explique se você tem alguma alergia ou dúvida sobre os serviços..."></textarea>
+          </label>
+        </section> <!-- fim de observações-->
+
+        <footer class="footer_formulario">
+          <button class="button_submit" type="submit">
+            Agendar <i class="bi bi-whatsapp"></i></button>
+        </footer>
+
+        
+
+
+      </form>
+
+
+     </section>
+
+
+    </main>
