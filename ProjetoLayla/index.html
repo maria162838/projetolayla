@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="estilo.css">
 
-  <!-- link do bootstrap: vai permitir usar os links do bootstrap sem precisar
+  <!-- link do bootstrap: vai permitir usar os ícones do bootstrap sem precisar
    baixar imagens -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -86,7 +86,7 @@
 
           <label for="name" class="label_container">
             <p class="label_descricao">Nome</p>
-            <input type="text" name="name" id="user_name" required>
+            <input type="text" name="name" id="user_name" class="contact_input" required maxlength="20">
 
             <span class="input_mensagem"></span>
             <!-- span necessário para exibir mensagens de erro dinamicamente -->
@@ -94,7 +94,7 @@
 
           <label for="tel" class="label_container">
             <p class="label_descricao">Whatsapp</p>
-            <input type="tel" name="tel" id="user_tel" required>
+            <input type="text" name="tel" id="user_tel" class="contact_input" required maxlength="15">
             <span class="input_mensagem"></span>
           </label>
         </section><!-- fim de informações de contato -->
@@ -114,41 +114,48 @@
 
             <h4 class="servicos_titulo_formulario">Desgin de Sobrancelhas</h4>
             <section class="service_type_container">
-              <label for="simple" class="label_container_checkbox">
-                <input type="checkbox" name="simple" id="eyebrow_simple">
+              <label  class="label_container_radio" value="simples">
+                <input type="radio" name="eyebrow_service" id="eyebrow_simple" value="simples" class="eyebrow_input">
                 <p class="label_checkbox_descricao">Design simples</p>
               </label>
-              <label for="henna" class="label_container_checkbox">
-                <input type="checkbox" name="henna" id="eyebrow_henna">
+
+
+              <label  class="label_container_radio" value="henna">
+                <input type="radio" name="eyebrow_service" id="eyebrow_henna" value="henna" class="eyebrow_input">
                 <p class="label_checkbox_descricao">Design com henna</p>
               </label>
-              <label for="lamination" class="label_container_checkbox">
-                <input type="checkbox" name="lamination" id="eyebrow_lamination">
+
+
+              <label  class="label_container_radio" value="brown_lamination">
+                <input type="radio" name="eyebrow_service" id="eyebrow_lamination" value="brown_lamination" class="eyebrow_input">
                 <p class="label_checkbox_descricao"><lang lang="en">Brown lamination</lang></p>
               </label>
+
+
             </section>
           </section> <!-- fim de design de sobrancelhas -->
 
           <section class="info_servicos_container">
             <h4 class="servicos_titulo_formulario">Extensão de Cílios</h4>
             <section class="service_type_container">
-              <label for="tuft" class="label_container_checkbox">
-                <input type="checkbox" name="tuft" id="eyelash_tuft">
+
+              <label  class="label_container_radio" value ='tufo_de_seda'>
+                <input type="radio" name="eyelash_service" id="eyelash_tuft" value ='tufo_de_seda'  class="eyelash_input">
                 <p class="label_checkbox_descricao">Tufo de seda</p>
               </label>
 
-              <label for="brasilian" class="label_container_checkbox">
-                <input type="checkbox" name="brasilian" id="eyelash_brasilian">
+              <label  class="label_container_radio" value ='volume_brasileiro'>
+                <input type="radio" name="eyelash_service" id="eyelash_brasilian" value ='volume_brasileiro'  class="eyelash_input">
                 <p class="label_checkbox_descricao">Volume brasileiro</p>
               </label>
 
-              <label for="egyptian" class="label_container_checkbox">
-                <input type="checkbox" name="egyptian" id="eyelash_egyptian">
+              <label  class="label_container_radio" value="volume_egpicio">
+                <input type="radio" name="eyelash_service" id="eyelash_egyptian" value="volume_egpicio"  class="eyelash_input">
                 <p class="label_checkbox_descricao">Volume egípcio</p>
               </label>
 
-              <label for="russian" class="label_container_checkbox">
-                <input type="checkbox" name="russian" id="eyelash_russian">
+              <label class="label_container_radio" value="volume_russo">
+                <input type="radio" name="eyelash_service" id="eyelash_russian"  value="volume_russo" class="eyelash_input">
                 <p class="label_checkbox_descricao">Volume russo</p>
               </label>
               
