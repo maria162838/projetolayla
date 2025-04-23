@@ -135,6 +135,7 @@ function inspector_services_choices(){
 
 // clickers 
 function clicker_services_choices(){
+    // contador por tipo de serviço a partir do clique
     let counter_services_display = document.querySelector('.contador_servicos');
     let eyebrows_inputs = document.querySelectorAll('.eyebrow_input') // retorna um array
     let eyelashes_inputs = document.querySelectorAll('.eyelash_input') // retorna um array
@@ -160,14 +161,41 @@ function clicker_services_choices(){
 
             counter_services_display.textContent = `${counter_services_chosen}/2`;
         })
-    });
 
+        
+    });
+    
     
 }
+
+function clicker_services_reset(){
+    const reset_button = document.querySelector('.button_reset');
+    const eyebrow_services = document.querySelectorAll('.eyebrow_input');
+    const eyelashes_services = document.querySelectorAll('.eyelash_input');
+
+    const counter_services_display = document.querySelector('.contador_servicos');
+
+    reset_button.addEventListener('click', ()=>{
+        eyebrow_services.forEach(service =>{
+            service.checked = false;
+        });
+
+        eyelashes_services.forEach(service =>{
+            service.checked = false;
+        })
+
+        counter_services_display.textContent = '0/0';
+    })
+
+}
+
+
+
 
 // chamando as funções 
 window.addEventListener('load', ()=>{
     inspector_contact_info();
     clicker_services_choices();
+    clicker_services_reset();
 });
 

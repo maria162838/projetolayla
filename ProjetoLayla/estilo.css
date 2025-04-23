@@ -245,6 +245,22 @@ responsavel: cauã */
   color: gray;
 }
 
+.footer_services_type_section{
+  margin-top: 2rem; margin-bottom: -2rem;
+  display: flex; align-items: center; justify-content: end;
+}
+
+.button_reset{
+  display: flex; align-items: center; justify-content: center;
+  gap: .5rem;
+  padding: .5rem 1rem;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  border: 1px solid black;
+  margin: 1rem 0;
+  font-size: clamp(.8rem, 1vw, 1rem);
+}
+
 .horarios_container{
   display: flex; flex-direction: column; 
   align-items: start; justify-content: space-between;
