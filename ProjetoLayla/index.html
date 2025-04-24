@@ -86,7 +86,7 @@
 
           <label for="name" class="label_container">
             <p class="label_descricao">Nome</p>
-            <input type="text" name="name" id="user_name" class="contact_input" required maxlength="20">
+            <input type="text" name="name" id="user_name" class="contact_input" maxlength="20">
 
             <span class="input_mensagem"></span>
             <!-- span necessário para exibir mensagens de erro dinamicamente -->
@@ -94,7 +94,7 @@
 
           <label for="tel" class="label_container">
             <p class="label_descricao">Whatsapp</p>
-            <input type="text" name="tel" id="user_tel" class="contact_input" required maxlength="15">
+            <input type="text" name="tel" id="user_tel" class="contact_input" maxlength="15">
             <span class="input_mensagem"></span>
           </label>
         </section><!-- fim de informações de contato -->
@@ -181,19 +181,36 @@
 
           <label for="calendar" class="label_container">
             <p class="label_description">Escolha a data</p>
-            <input type="date" name="calendar" id="calendar_input" required>
+            <input type="date" name="calendar" id="calendar_input">
+            <div class="message_data"></div>
           </label>
 
           <section class="horarios_container">
             <p class="label_description">Escolha o melhor horário</p>
 
             <div class="buttons_container">
-              <button class="time_button" id="morning">Manhã</button>
-              <button class="time_button" id="afternoon">Tarde</button>
-              <button class="time_button" id="night">Noite</button>
-
+              <!-- 
+              <button class="time_button" id="manhã" type="button">Manhã</button>
+              <button class="time_button" id="tarde" type="button">Tarde</button>
+              <button class="time_button" id="noite" type="button">Noite</button>
+            -->
+              <label for="manhã" class="time_button">
+                <input type="checkbox" name="manhã" id="manhã" class="input_time" >
+                <p class="button_time_description">Manhã</p>
+              </label>
               
+              <label for="tarde" class="time_button">
+                <input type="checkbox" name="tarde" id="tarde" class="input_time" >
+                <p class="button_time_description">Tarde</p>
+              </label>
+
+              <label for="noite" class="time_button">
+                <input type="checkbox" name="noite" id="noite" class="input_time" >
+                <p class="button_time_description">Noite</p>
+              </label>
             </div>
+            
+
 
             <footer class="footer_horario_formulario">
               <label for="allday" class="horario_label">
@@ -201,10 +218,14 @@
                 <input type="checkbox" name="allday" id="time_allday">
               </label>
             </footer>
+
+            
           </section> <!-- fim de horarios -->
+          <section class="test_lista"></section>
         </section><!-- fim de agendamento-->
 
         <section class="info_section">
+          
           <header class="info_header">
             <i class="bi bi-chat-square-dots info_icone_titulo"></i>
             <h3 class="info_title"> Observações</h3>

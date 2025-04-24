@@ -131,6 +131,52 @@ function inspector_services_choices(){
 
 }
 
+function inspector_valid_date(){
+    let display_date = document.querySelector('.message_data');
+    
+    let date_today = new Date(); // colocando a data do dia
+    const date_input = document.getElementById('calendar_input');
+
+
+    // validando a data escolhida conforme a data atual
+    date_input.addEventListener('change', (event) =>{
+        let date_user = new Date(event.target.value  + 'T00:00:00');
+        //  + 'T00:00:00' = Forçar o padrão de hoario para local. Estava dando problema
+        //                  colocando um dia após o dia atual.
+
+
+        //resetando a hora pra não dar erro de compatibilidade com o sistema
+        // sistema conta milisegundos, o que vai causar diferença
+        date_user.setHours(0,0,0,0);
+        date_today.setHours(0,0,0,0);
+
+        switch (true){
+            case(date_user.getTime() < date_today.getTime()):
+                display_date.textContent = 'Atenção! Esta data já passou.'
+                display_date.classList.add('date_error');
+                display_date.classList.remove('date_valid', 'date_warning');
+                break;
+
+            case (date_user.getTime() === date_today.getTime() ):
+                display_date.textContent = 'Cuidado! Data muito próxima, verifique se é o ideal.'
+                display_date.classList.remove('date_error', 'date_valid');
+                display_date.classList.add('date_warning');
+                
+                break;
+
+                case(date_user.getTime() > date_today.getTime()):
+                    display_date.textContent = 'Data válida.'
+                    display_date.classList.remove('date_warning', 'date_error');
+                    display_date.classList.add('date_valid');
+                break;
+        }
+
+        
+    })
+
+    
+
+}
 
 
 // clickers 
@@ -189,13 +235,106 @@ function clicker_services_reset(){
 
 }
 
+function clicker_hour_choices(){
+    // vai pegar o valor do id e desabilitar os outros conforme selecionado
+
+    const day_period_buttons = document.querySelectorAll('.input_time');
+    const input_all_day = document.getElementById('time_allday');
+    let day_periods_list = [];
+    let day_period = ' ';
+
+    let test_lista = document.querySelector('.test_lista')
+
+    day_period_buttons.forEach(button =>{
+        button.addEventListener('change', ()=>{
+            
+            day_period = button.getAttribute('id');
+            const label = document.querySelector(`label[for="${day_period}"]`);
+
+            
+
+            if(button.checked){
+                // dando feedback visual ao label: clicou, mudou de cor
+                label.classList.add('active')
+                // confere se o input ativo esta na lista
+                if(day_periods_list.includes(day_period)){
+                    day_period = ' ';
+                    
+                } else{
+                    //adiciona se n tiver
+                    day_periods_list.push(day_period);
+                    day_period = ' ';
+                }
+
+                
+
+            } else{
+                // dando feedback visual ao label: clicou, mudou de cor
+                label.classList.remove('active')
+                // vai retirar se ele não estiver ativo
+                if(day_periods_list.includes(day_period)){
+                    let index_item = day_periods_list.indexOf(day_period);
+
+                    if(index_item != -1){
+                        day_periods_list.splice(index_item, 1)
+                    }
+                }
+
+                
+            }
+
+            test_lista.textContent = day_periods_list;
+        })
+
+        
+    });
+
+    input_all_day.addEventListener('change', () =>{
+        if(input_all_day.checked){
+            
+
+            day_period_buttons.forEach(button =>{
+                button.checked = true;
+                let button_value = button.getAttribute('id')
+                const label = document.querySelector(`label[for="${button_value}"]`);
+
+                day_periods_list.push(button_value)
+
+                label.classList.add('active')
+            })
+        } else{
+            day_period_buttons.forEach(button =>{
+                let button_value = button.getAttribute('id')
+                const label = document.querySelector(`label[for="${button_value}"]`);
+
+                button.checked = false;
+                day_periods_list = ['teste'];
+                label.classList.remove('active')
+
+            })
+        }
+        test_lista.textContent = day_periods_list;
+    })
+
+    
+
+    
+
+
+    
+    
+}
 
 
 
 // chamando as funções 
 window.addEventListener('load', ()=>{
     inspector_contact_info();
+    inspector_valid_date();
+
     clicker_services_choices();
     clicker_services_reset();
+    clicker_hour_choices()
+    
 });
 
