@@ -178,6 +178,27 @@ function inspector_valid_date(){
 
 }
 
+function inspector_message_user(){
+    // vai contar quantos caracteres estão sendo escritos pelo usuario. 
+    // vai dar feedbackvisual quando chegar no limite máximo
+    let message_input = document.getElementById('user_message');
+    let counter_container = document.querySelector('.counter_char_container');
+    let max_length = message_input.getAttribute('maxlength');
+
+    message_input.addEventListener('input', () =>{
+        let message_user = message_input.value
+
+        if(message_user.length < max_length){
+            message_input.classList.remove('max_lenght');
+            counter_container.classList.remove('error')
+        } else if(message_user.length == max_length){
+            message_input.classList.add('max_lenght');
+            counter_container.classList.add('error')
+
+        }
+        counter_container.textContent = `${message_user.length}/${max_length}`
+    }) 
+}
 
 // clickers 
 function clicker_services_choices(){
@@ -243,7 +264,7 @@ function clicker_hour_choices(){
     let day_periods_list = [];
     let day_period = ' ';
 
-    let test_lista = document.querySelector('.test_lista')
+    let test_lista = document.querySelector('.services_list')
 
     day_period_buttons.forEach(button =>{
         button.addEventListener('change', ()=>{
@@ -283,7 +304,7 @@ function clicker_hour_choices(){
                 
             }
 
-            test_lista.textContent = day_periods_list;
+            test_lista.textContent = `Período(s) Escolhido(s): ${day_periods_list}`;
         })
 
         
@@ -308,12 +329,12 @@ function clicker_hour_choices(){
                 const label = document.querySelector(`label[for="${button_value}"]`);
 
                 button.checked = false;
-                day_periods_list = ['teste'];
+                day_periods_list = [];
                 label.classList.remove('active')
 
             })
         }
-        test_lista.textContent = day_periods_list;
+        test_lista.textContent = `Período(s) Escolhido(s): ${day_periods_list}`;
     })
 
     
@@ -331,6 +352,7 @@ function clicker_hour_choices(){
 window.addEventListener('load', ()=>{
     inspector_contact_info();
     inspector_valid_date();
+    inspector_message_user();
 
     clicker_services_choices();
     clicker_services_reset();
