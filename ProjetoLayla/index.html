@@ -122,7 +122,7 @@
 
         <section class="info_section">
           <header class="info_header">
-            <i class="bi bi-person info_icone_titulo"></i>
+            <i class="bi bi-brush"></i>
             <h3 class="info_title">Serviços Prestados</h3>
             
           </header>
@@ -210,23 +210,18 @@
             <p class="label_description">Escolha o melhor horário</p>
 
             <div class="buttons_container">
-              <!-- 
-              <button class="time_button" id="manhã" type="button">Manhã</button>
-              <button class="time_button" id="tarde" type="button">Tarde</button>
-              <button class="time_button" id="noite" type="button">Noite</button>
-            -->
               <label for="manhã" class="time_button">
-                <input type="checkbox" name="manhã" id="manhã" class="input_time" >
+                <input type="checkbox" name="manhã" id="manhã" class="input_time"  hidden>
                 <p class="button_time_description">Manhã</p>
               </label>
               
               <label for="tarde" class="time_button">
-                <input type="checkbox" name="tarde" id="tarde" class="input_time" >
+                <input type="checkbox" name="tarde" id="tarde" class="input_time"  hidden>
                 <p class="button_time_description">Tarde</p>
               </label>
 
               <label for="noite" class="time_button">
-                <input type="checkbox" name="noite" id="noite" class="input_time" >
+                <input type="checkbox" name="noite" id="noite" class="input_time" hidden >
                 <p class="button_time_description">Noite</p>
               </label>
             </div>
@@ -242,10 +237,10 @@
 
             
           </section> <!-- fim de horarios -->
-          <section class="test_lista"></section>
+          <section class="services_list"></section>
         </section><!-- fim de agendamento-->
 
-        <section class="info_section">
+        <section class="info_section obs_section">
           
           <header class="info_header">
             <i class="bi bi-chat-square-dots info_icone_titulo"></i>
@@ -254,8 +249,10 @@
 
           <label for="message" class="message_label">
             <p class="message_description">Escreva sua menssagem abaixo</p>
-            <textarea name="message" id="user_message" maxlength="200" class="message_user" placeholder="Explique se você tem alguma alergia ou dúvida sobre os serviços..."></textarea>
+            <textarea name="message" id="user_message" maxlength="100" class="message_user" placeholder="Explique se você tem alguma alergia ou dúvida sobre os serviços..."></textarea>
           </label>
+
+          <div class="counter_char_container" aria-hidden="true"></div>
         </section> <!-- fim de observações-->
 
         <footer class="footer_formulario">
