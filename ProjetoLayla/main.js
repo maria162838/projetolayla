@@ -1,201 +1,292 @@
-/* as funções neste arquivo estão divididas em categorias para facilitar
-a organização do documento e a sua manuntenção. As funções são chamadas
-no final do documento
+/* 
 
-Cada função começa com o nome da sua categoria, sendo elas: 
-
-i. clicker: vai criar uma ação a partir do clique do usuário;
-ii. inspector: vai inspecionar um input para validar as informações do usuário;
+1- pegar as informações para validação.
+2- depois de validar, salvar em uma variavel / localstorage 
+    obs: não esquecer: erro aparecendo, botão desabilitado.
+3- transformar o que ta salvo em mensagem de whatsapp
+    obs: usar \n para quebra de linha 
+4- enviar informações 
 
 */
 
 
+// variaveis globais 
+let variables_for_check = {};
 
-// inspectors 
-function inspector_contact_info(){
-    //validação dos inputs de contato do usuário 
+let data_user = {};
 
-    let user_name_input = document.getElementById('user_name');
-    let user_tel_input = document.getElementById('user_tel');
-    let error_message = document.querySelectorAll('.input_mensagem');
-    // -> index para nome: 0 ;; index para whatsapp: 1  ;;
 
-    let inputs_form = document.querySelector('.contact_input')
-    // para alteração de estilo mais fácil
 
-    const validations_rules ={
-        name_char: /^[a-zA-ZÀ-ÿ\s]+$/,
-        tel_char: /^[0-9()\-\s]+$/,  
+// funções globais 
+function save_data(key, value)// salva dados na variavel global data_user
+{
+    data_user[key] = value
+
+    //console.log(data_user)
+}
+
+function trigger_warner_message(type, message, classname)// ativa mensagens de erro
+{
+    let types = ['error', 'caution', 'valid'];
+    let class_name = document.querySelector(classname);
+
+    types.forEach(item =>{
+        if (item == type){
+            class_name.classList.add(item)
+        }else{
+            class_name.classList.remove(item)
+        };
+    });
+
+    return class_name.textContent = message;
+}
+
+function toggle_warner_container(type, inputname)// altera UI conforme erro
+{
+    let types = ['error', 'caution', 'valid'];
+    let class_name = document.querySelector(inputname)
+
+    types.forEach(item =>{
+        if (item == type){
+            class_name.classList.add(item)
+        } else{
+            class_name.classList.remove(item)
+        }
+    });
+}
+
+function transform_date_string(date){
+    let dia_mes = date.getDate();
+    let dia_semana = dias_semana[dia_na_semana];
+    let mes = date.getMonth();
+    let ano = date.getFullYear();
+
+    let dia_na_semana = date.getDay()
+
+    let dias_semana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira',
+                       'quinta-feira', 'sexta-feira', 'sábado'];
+
+    return `${dia_mes}/${mes}/${ano} - ${dia_semana}`
+}
+
+
+
+
+// funções que vão dar UI de erro e acrescentar no user_data
+function trigger_name(){
+    let user_name = document.getElementById('user_name');
+
+    const regex_rules = {
+        name_rules: /^[a-zA-ZÀ-ÿ\s]+$/,
+        tel_rule: /^[0-9]+$/
+    }
+
+    // validacao de nome
+    user_name.addEventListener('blur', (event)=>{
+        let name = event.target.value;
+
+        if(name.length <= 2){
+            trigger_message = 'Atenção! Nome curto demais.';
+            trigger_warner_message('error', trigger_message, '.trigger_name');
+            toggle_warner_container('error', '.trigger_name');
+            checker_validation('name', 'invalid', '');
+
+            delete data_user.nome;
+
+        }else if(regex_rules.name_rules.test(name)){
+            trigger_message = 'Nome válido.';
+            trigger_warner_message('valid', trigger_message, '.trigger_name');
+            toggle_warner_container('valid', '.name_input');
+            checker_validation('name', 'valid', '');
+            
+            save_data('nome', name);
+            
+        } else{
+            trigger_message = 'Atenção! Você digitou algo errado.'
+            trigger_warner_message('error', trigger_message, '.trigger_name');
+            toggle_warner_container('error', '.name_input');
+            checker_validation('name', 'invalid', '');
+
+            delete data_user.nome;
+        }
+    });        
+    
+};
+
+function trigger_tel(){
+    let user_tel = document.getElementById('user_tel');
+
+    let trigger_message = '';
+
+    const regex_rules = {
+        name_rules: /^[a-zA-ZÀ-ÿ\s]+$/,
+        tel_rule: /^[0-9]+$/
+    }
+
+    //validação de telefone
+    user_tel.addEventListener('blur', (event) =>{
+        let tel = event.target.value;
+
+
+         if(tel.length != 11 && regex_rules.tel_rule.test(tel)){
+            trigger_message = 'Atenção! Número curto demais.'
+            trigger_warner_message('error', trigger_message, '.trigger_tel');
+            toggle_warner_container('error', '.tel_input');
+            checker_validation('tel', 'invalid', '');
+
+            delete data_user.telefone
+
+        } else if(regex_rules.tel_rule.test(tel)){
+            trigger_message = 'Número válido.'
+            trigger_warner_message('valid', trigger_message, '.trigger_tel');
+            toggle_warner_container('valid', '.tel_input');
+            checker_validation('tel', 'valid', '');
+
+            save_data('telefone', tel);
+
+        }else{
+            trigger_message = 'Atenção! Parece que você digitou algo errado.'
+            trigger_warner_message('error', trigger_message, '.trigger_tel');
+            trigger_warner_message('error', '.tel_input');
+            checker_validation('tel', 'invalid', '');
+
+            delete data_user.telefone
+        };
+
+
+        
+    });
+}
+
+function trigger_services(){
+    let select_input = document.querySelectorAll('.select_input');
+    let message_select_erro = document.querySelector('.trigger_selec_input')
+
+    // criar um objeto para salvar os serviços
+    const services = {
+        sobrancelha: '',
+        cilios: ''
     };
-    // -> regex's em forma de objeto para facilitar a validação sem muitas variáveis
 
+    //iterar nos selects para pegar o name e adicionar no objeto
+    select_input.forEach(input =>{
+        let input_name = input.getAttribute('name');
 
-    user_name_input.addEventListener('input', (event)=>{
-        let name_value = event.target.value;
+        input.addEventListener('blur', (event) =>{
+            let input_value = event.target.value;
 
-        // conferindo a digitação do usuário
-        if( validations_rules.name_char.test(name_value) ){
-            error_message[0].style.display = 'flex'
-            error_message[0].textContent = 'Formato aceito!';
+            if(input_name == 'sobrancelha'){
 
-            error_message[0].classList.add('valid');
-            error_message[0].classList.remove('warning');
-            error_message[0].classList.remove('error');
+                input_value = input_value.replace('_', ' ');
+                services.sobrancelha = input.value
+            } else{
+                input_value = input_value.replace('_', ' ');
+                services.cilios = input.value
+            };
 
+            //comparar chaves para validação
+            if(services.sobrancelha === services.cilios){
+                let trigger_message = "Você tem que escolher pelo menos um serviço."
 
-        } else{
-            error_message[0].classList.add('error');
-            error_message[0].classList.remove('warning');
-            error_message[0].classList.remove('valid');
+                trigger_warner_message('error', trigger_message, '.trigger_selec_input')
 
-            error_message[0].style.display = 'flex';
-            error_message[0].textContent = 'Atenção! Parece que você digitou errado.';
-            
-        } 
+                delete data_user["serviço de sobrancelha"]
+                delete data_user["serviço de cilios"]
 
-        if(name_value == ''){
-            
-            error_message[0].classList.add('error');
+            }else{
+                trigger_message = 'Escolhas válidas.';
+                trigger_warner_message('valid', trigger_message, '.trigger_selec_input')
 
-            error_message[0].classList.remove('warning');
-            error_message[0].classList.remove('valid');
+                save_data('serviço de sobrancelha', services.sobrancelha);
+                save_data('serviço de cilios', services.cilios);
+            }
 
-            error_message[0].style.display = 'flex';
-            error_message[0].textContent = 'Atenção! O campo precisa ser preenchido.';
-        }
-
-        if (name_value.length == 20){
-            error_message[0].classList.add('warning')
-
-            error_message[0].classList.remove('valid');
-            error_message[0].classList.remove('error');
-
-            
-            error_message[0].style.display = 'flex';
-            error_message[0].textContent = 'Cuidado! Você não pode escrever mais.';
-        }
-    })
-
-    user_tel_input.addEventListener('input', (event) =>{
-        let tel_value = event.target.value;
-        let tel_input_status = false;
-
-
-        // mascarando o número 
-        let tel_cleaned = tel_value.replace(/\D/g, '');
-
-        tel_cleaned = tel_cleaned.replace(/^(\d{0,2})(\d{0,5})(\d{0,4})/, function(_, ddd, first, second) {
-            if (!first) return `(${ddd}`;
-            if (!second) return `(${ddd}) ${first}`;
-            return `(${ddd}) ${first}-${second}`;
         });
-
-        user_tel_input.value = tel_cleaned;
-
-
-        // garantindo que o usuário escreva certo
-        if (validations_rules.tel_char.test(tel_value)){
-            error_message[1].classList.remove('error');
-            error_message[1].classList.remove('warning');
-            error_message[1].classList.add('valid');
-
-            error_message[1].style.display = 'flex'
-            error_message[1].textContent = 'Formato aceito!';
-            
-            
-        } else{
-            error_message[1].classList.add('error');
-            error_message[1].classList.remove('warning');
-            error_message[1].classList.remove('valid');
-
-            error_message[1].style.display = 'flex';
-            error_message[1].textContent = 'Atenção! Você apertou a tecla errada.';
-            
-        
-        } if( tel_value == ''){
-            error_message[1].classList.add('error');
-            error_message[1].classList.remove('warning');
-            error_message[1].classList.remove('valid');
-
-            error_message[1].style.display = 'flex';
-            error_message[1].textContent = 'Atenção! O campo precisa ser preenchido.';
-
-
-        }
-
-    })
-
-}
-
-function inspector_services_choices(){
-
-}
-
-
-
-// clickers 
-function clicker_services_choices(){
-    // contador por tipo de serviço a partir do clique
-    let counter_services_display = document.querySelector('.contador_servicos');
-    let eyebrows_inputs = document.querySelectorAll('.eyebrow_input') // retorna um array
-    let eyelashes_inputs = document.querySelectorAll('.eyelash_input') // retorna um array
-    let button_services = document.querySelectorAll('.label_container_radio'); //retorna um array
-
-
-    button_services.forEach(button => {
-        button.addEventListener('click', ()=>{
-            let counter_services_chosen = 0;
-
-            eyebrows_inputs.forEach(input => {
-                if(input.checked){
-                    counter_services_chosen += 1;
-                    
-                }
-            });
-        
-            eyelashes_inputs.forEach(input => {
-                if(input.checked){
-                    counter_services_chosen += 1;
-                }
-            });
-
-            counter_services_display.textContent = `${counter_services_chosen}/2`;
-        })
 
         
     });
     
-    
+};
+
+
+
+// funções de validação exclusivamente: vão validar o input conforme a presença da chave
+function validate_name(){
+    let name_is_valid = data_user.hasOwnProperty('nome');
+
+        if(name_is_valid){
+            return 'valid'
+        } else{
+            return 'invalid'
+        }
 }
 
-function clicker_services_reset(){
-    const reset_button = document.querySelector('.button_reset');
-    const eyebrow_services = document.querySelectorAll('.eyebrow_input');
-    const eyelashes_services = document.querySelectorAll('.eyelash_input');
+function validate_tel(){
+    let tel_is_valid = data_user.hasOwnProperty('telefone');
 
-    const counter_services_display = document.querySelector('.contador_servicos');
+        if(tel_is_valid){
+            return 'valid'
+        } else{
+            return 'invalid'
+        }
+}
 
-    reset_button.addEventListener('click', ()=>{
-        eyebrow_services.forEach(service =>{
-            service.checked = false;
-        });
+function validate_services(){
+    let eyebrow_is_valid = data_user.hasOwnProperty('serviço de sobrancelha');
+    let eyelash_is_valid = data_user.hasOwnProperty('serviço de cilios');
 
-        eyelashes_services.forEach(service =>{
-            service.checked = false;
-        })
+    if(eyebrow_is_valid && eyelash_is_valid){
+        console.log('Validação de serviços: VÁLIDO')
+        return 'valid'
 
-        counter_services_display.textContent = '0/0';
-    })
-
+    } else{
+        console.log('Validação de serviços: INVÁLIDO')
+        return 'invalid'
+    }
 }
 
 
 
+// chamando as funções conforme necessário 
 
-// chamando as funções 
 window.addEventListener('load', ()=>{
-    inspector_contact_info();
-    clicker_services_choices();
-    clicker_services_reset();
+    trigger_name();
+    trigger_tel();
+    trigger_services();
+
+    
+
 });
+    
+
+let button_submit = document.querySelector('.button_submit');
+let form = document.querySelector('.formulario_container')
+
+    form.addEventListener('submit', (event) =>{
+        let data_user_lenght = Object.keys(data_user).length;
+
+        if(data_user_lenght < 6){
+            event.preventDefault();
+            // verificação manual de qual input está inválido
+            //input de nome
+            if(validate_name() === 'invalid'){
+                let section = document.querySelector('.name_input');
+                section.scrollIntoView({behavior: "smooth"});
+                section.focus();
+            } else if(validate_tel() === 'invalid'){
+                let section = document.querySelector('.tel_input');
+                section.scrollIntoView({behavior: "smooth"});
+                section.focus();
+            } else if(validate_services() === 'invalid'){
+                let section = document.querySelector('.services_section_form');
+                section.scrollIntoView({behavior: "smooth"});
+                section.focus();
+            }
+        }     
+
+    });
+    
+
+
+
 
