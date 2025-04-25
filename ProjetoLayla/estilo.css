@@ -101,7 +101,17 @@ h2 {
   font-size: 28px;
   margin-bottom: 10px;
 }
-
+h3 {
+  color: #d94f4f;
+  font-size: 20px;
+  margin-bottom: 10px;
+  
+}
+.subdocarrossel {
+display: flex; 
+gap: 330px;
+justify-content: center;
+}
 .card {
   background-color: #fff2f2;
   padding: 15px;
@@ -125,7 +135,7 @@ h2 {
 
 .container-carrossel {
   max-width: 450px;
-  min-height: 350px;
+  min-height: 450px;
   }
   
   .carrossel {
@@ -135,7 +145,6 @@ h2 {
       overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scrollbar-width: none;
   max-width: 310px;
   
 
@@ -146,7 +155,6 @@ h2 {
     height: 300px;
     object-fit: cover;
     border-radius: 40px;
-    scroll-snap-align: center;
   }
   
 
