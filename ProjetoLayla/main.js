@@ -22,7 +22,7 @@ function save_data(key, value)// salva dados na variavel global data_user
 {
     data_user[key] = value
 
-    console.log(data_user)
+    //console.log(data_user)
 }
 
 function trigger_warner_message(type, message, classname)// ativa mensagens de erro
@@ -69,59 +69,12 @@ function transform_date_string(date){
     return `${dia_mes}/${mes}/${ano} - ${dia_semana}`
 }
 
-function toggle_submit_button(status)// desabilita/habilita botão conforme status dos inputs
-{
-    let button = document.querySelector('.button_submit');
-    
-        if(status === 'invalid'){
-            button.disabled = true;
-            return 'invalid';
-
-            
-        }else{
-            button.disabled = false;
-            return 'valid'
-        }
-    
-
-};
-
-function checker_validation(key, value, clear){
-    let counter = 0;
-
-    if(clear == 'limpar'){
-        variables_for_check = {}
-    } else{
-        variables_for_check[key] = value;
-    }
-
-    Object.keys(variables_for_check).forEach(chave =>{
-        let status = variables_for_check[chave]
-
-        if(status == 'invalid'){
-            counter += 1;
-        }
-
-        
-    });
-
-    if(counter > 0){
-        return 'invalids inputs'
-    } else{
-        return 'valids inputs'
-    }
-}
 
 
 
-
-
-// funções de validação
-function validate_contact_info(){
+// funções que vão dar UI de erro e acrescentar no user_data
+function trigger_name(){
     let user_name = document.getElementById('user_name');
-    let user_tel = document.getElementById('user_tel');
-
-    let trigger_message = ''
 
     const regex_rules = {
         name_rules: /^[a-zA-ZÀ-ÿ\s]+$/,
@@ -138,7 +91,7 @@ function validate_contact_info(){
             toggle_warner_container('error', '.trigger_name');
             checker_validation('name', 'invalid', '');
 
-            toggle_submit_button('invalid');
+            delete data_user.nome;
 
         }else if(regex_rules.name_rules.test(name)){
             trigger_message = 'Nome válido.';
@@ -147,7 +100,6 @@ function validate_contact_info(){
             checker_validation('name', 'valid', '');
             
             save_data('nome', name);
-            toggle_submit_button('valid');
             
         } else{
             trigger_message = 'Atenção! Você digitou algo errado.'
@@ -155,9 +107,21 @@ function validate_contact_info(){
             toggle_warner_container('error', '.name_input');
             checker_validation('name', 'invalid', '');
 
-            toggle_submit_button('invalid');
+            delete data_user.nome;
         }
-    });
+    });        
+    
+};
+
+function trigger_tel(){
+    let user_tel = document.getElementById('user_tel');
+
+    let trigger_message = '';
+
+    const regex_rules = {
+        name_rules: /^[a-zA-ZÀ-ÿ\s]+$/,
+        tel_rule: /^[0-9]+$/
+    }
 
     //validação de telefone
     user_tel.addEventListener('blur', (event) =>{
@@ -170,7 +134,7 @@ function validate_contact_info(){
             toggle_warner_container('error', '.tel_input');
             checker_validation('tel', 'invalid', '');
 
-            toggle_submit_button('invalid');
+            delete data_user.telefone
 
         } else if(regex_rules.tel_rule.test(tel)){
             trigger_message = 'Número válido.'
@@ -179,7 +143,6 @@ function validate_contact_info(){
             checker_validation('tel', 'valid', '');
 
             save_data('telefone', tel);
-            toggle_submit_button('valid');
 
         }else{
             trigger_message = 'Atenção! Parece que você digitou algo errado.'
@@ -187,24 +150,15 @@ function validate_contact_info(){
             trigger_warner_message('error', '.tel_input');
             checker_validation('tel', 'invalid', '');
 
-            toggle_submit_button('invalid');
+            delete data_user.telefone
         };
 
 
         
     });
+}
 
-    // validar ambos os campos para dar o return da função
-    if(checker_validation() == 'invalids inputs'){
-        return 'invalid'
-    } else{
-        return 'valid'
-    }
-
-
-};
-
-function validate_services(){
+function trigger_services(){
     let select_input = document.querySelectorAll('.select_input');
     let message_select_erro = document.querySelector('.trigger_selec_input')
 
@@ -236,18 +190,17 @@ function validate_services(){
 
                 trigger_warner_message('error', trigger_message, '.trigger_selec_input')
 
-                toggle_submit_button('invalid');
+                delete data_user["serviço de sobrancelha"]
+                delete data_user["serviço de cilios"]
+
             }else{
                 trigger_message = 'Escolhas válidas.';
                 trigger_warner_message('valid', trigger_message, '.trigger_selec_input')
 
                 save_data('serviço de sobrancelha', services.sobrancelha);
                 save_data('serviço de cilios', services.cilios);
-
-                toggle_submit_button('valid');
             }
 
-            //console.log(data_user);
         });
 
         
@@ -255,34 +208,85 @@ function validate_services(){
     
 };
 
-// funções de coleta de informações
+
+
+// funções de validação exclusivamente: vão validar o input conforme a presença da chave
+function validate_name(){
+    let name_is_valid = data_user.hasOwnProperty('nome');
+
+        if(name_is_valid){
+            return 'valid'
+        } else{
+            return 'invalid'
+        }
+}
+
+function validate_tel(){
+    let tel_is_valid = data_user.hasOwnProperty('telefone');
+
+        if(tel_is_valid){
+            return 'valid'
+        } else{
+            return 'invalid'
+        }
+}
+
+function validate_services(){
+    let eyebrow_is_valid = data_user.hasOwnProperty('serviço de sobrancelha');
+    let eyelash_is_valid = data_user.hasOwnProperty('serviço de cilios');
+
+    if(eyebrow_is_valid && eyelash_is_valid){
+        console.log('Validação de serviços: VÁLIDO')
+        return 'valid'
+
+    } else{
+        console.log('Validação de serviços: INVÁLIDO')
+        return 'invalid'
+    }
+}
 
 
 
 // chamando as funções conforme necessário 
 
 window.addEventListener('load', ()=>{
-    validate_contact_info();
-    validate_services();
+    trigger_name();
+    trigger_tel();
+    trigger_services();
 
+    
 
+});
+    
 
-    let button_submit = document.querySelector('.button_submit');
-    let form = document.querySelector('.formulario_container')
+let button_submit = document.querySelector('.button_submit');
+let form = document.querySelector('.formulario_container')
 
     form.addEventListener('submit', (event) =>{
-        if(toggle_submit_button() === 'invalid'){
-            button_submit.disabled = true;
+        let data_user_lenght = Object.keys(data_user).length;
+
+        if(data_user_lenght < 6){
             event.preventDefault();
-            
-            // adicionar a verificação manual dos serviços aqui
-        } else{
-            button_submit.disabled = false;
-        }
+            // verificação manual de qual input está inválido
+            //input de nome
+            if(validate_name() === 'invalid'){
+                let section = document.querySelector('.name_input');
+                section.scrollIntoView({behavior: "smooth"});
+                section.focus();
+            } else if(validate_tel() === 'invalid'){
+                let section = document.querySelector('.tel_input');
+                section.scrollIntoView({behavior: "smooth"});
+                section.focus();
+            } else if(validate_services() === 'invalid'){
+                let section = document.querySelector('.services_section_form');
+                section.scrollIntoView({behavior: "smooth"});
+                section.focus();
+            }
+        }     
+
     });
     
-    
-})
+
 
 
 

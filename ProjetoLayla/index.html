@@ -6,6 +6,7 @@
   <title>Layla Design</title>
 
   <link rel="stylesheet" href="estilo.css">
+  <link rel="stylesheet" href="media_queries.css">
 
   <!-- link do bootstrap: vai permitir usar os ícones do bootstrap sem precisar
    baixar imagens -->
@@ -99,7 +100,7 @@
      <section class="formulario_section">
       <h2 class="title_form">Agende seu serviço</h2>
       <form action="" class="formulario_container">
-        <section class="info_section">
+        <section class="info_section" id='contact_info'>
           <header class="info_header">
             <i class="bi bi-person info_icone_titulo"></i>
             <h3 class="info_title">Informações de Contato</h3>
@@ -139,6 +140,7 @@
               <label for="sobrancelha" class="select_label">
                 <p class="titulo_opcoes">Para Sobrancelha</p>
                 <select name="sobrancelha" id="eyebrow_select" class="select_input">
+                  <option value=""></option>
                   <option value="Nenhum">Nenhum Escolhido</option>
                   <option value="Design_Simples">Design Simples</option>
                   <option value="Design_Henna">Design de Henna</option>
@@ -149,6 +151,7 @@
               <label for="cilios" class="select_label">
                 <p class="titulo_opcoes">Para Cílios</p>
                 <select name="cilios" id="eyelash_select" class="select_input">
+                  <option value=""></option>
                   <option value="Nenhum">Nenhum Escolhido</option>
                   <option value="Tufo_de_Seda">Tufo de Seda</option>
                   <option value="Volume_Brasileiro">Volume Brasileiro</option>
