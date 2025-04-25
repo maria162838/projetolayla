@@ -1,4 +1,4 @@
-/* Reset básico */
+
 * {
   margin: 0;
   padding: 0;
@@ -21,23 +21,35 @@ body {
 
 header {
   background-color: #ffe0e0;
-  padding: 15px;
+  padding: 15px 0; /* garante altura vertical */
   position: relative;
+  height: 70px; /* aumenta o header pra não esconder o botão */
+  z-index: 10;
 }
-
 #menu-toggle {
   display: none;
 }
 
 .menu-hamburguer {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
   width: 30px;
   height: 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  cursor: pointer;
-  margin: 0 auto;
+  padding: 5px;
+ 
+  
 }
+
+.menu-hamburguer:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+
 
 .menu-hamburguer span {
   height: 4px;
@@ -104,7 +116,12 @@ h2 {
   gap: 100px;
   flex-wrap: wrap; 
   padding: 20px;
+  background-color: #fff2f2; 
+  border-radius: 20px;
+  margin: 20px auto;
+  
 }
+
 
 .container-carrossel {
   max-width: 450px;
