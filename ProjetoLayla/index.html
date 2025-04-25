@@ -97,7 +97,7 @@
      em uma mensagem para whatsapp -->
 
      <section class="formulario_section">
-
+      <h2 class="title_form">Agende seu serviço</h2>
       <form action="" class="formulario_container">
         <section class="info_section">
           <header class="info_header">
@@ -107,20 +107,22 @@
 
           <label for="name" class="label_container">
             <p class="label_descricao">Nome</p>
-            <input type="text" name="name" id="user_name" class="contact_input" maxlength="20">
+            <input type="text" name="name" id="user_name"
+            class="name_input" maxlength="15" minlength="2" required>
 
-            <span class="input_mensagem"></span>
+            <span class="trigger_name"></span>
             <!-- span necessário para exibir mensagens de erro dinamicamente -->
           </label>
 
           <label for="tel" class="label_container">
-            <p class="label_descricao">Whatsapp</p>
-            <input type="text" name="tel" id="user_tel" class="contact_input" maxlength="15">
-            <span class="input_mensagem"></span>
+            <p class="label_descricao">Telefone de contato</p>
+            <input type="tel" name="tel" id="user_tel" class="tel_input"
+            maxlength="11" minlength="11" required>
+            <span class="trigger_tel"></span>
           </label>
         </section><!-- fim de informações de contato -->
 
-        <section class="info_section">
+        <section class="info_section services_section_form">
           <header class="info_header">
             <i class="bi bi-brush"></i>
             <h3 class="info_title">Serviços Prestados</h3>
@@ -130,71 +132,39 @@
           <section class="info_servicos_container">
             <section class="contador_servicos_container">
               <p class="info_descricao">Você pode escolher até 2 serviços</p>
-              <span class="contador_servicos">0/2</span>
             </section>
 
-            <h4 class="servicos_titulo_formulario">Desgin de Sobrancelhas</h4>
-            <section class="service_type_container">
-              <label  class="label_container_radio" value="simples">
-                <input type="radio" name="eyebrow_service" id="eyebrow_simple" value="simples" class="eyebrow_input">
-                <p class="label_checkbox_descricao">Design simples</p>
+            <section class="select_container">
+
+              <label for="sobrancelha" class="select_label">
+                <p class="titulo_opcoes">Para Sobrancelha</p>
+                <select name="sobrancelha" id="eyebrow_select" class="select_input">
+                  <option value="Nenhum">Nenhum Escolhido</option>
+                  <option value="Design_Simples">Design Simples</option>
+                  <option value="Design_Henna">Design de Henna</option>
+                  <option value="Brown_Lamination">Brown Lamination</option>
+                  
+                </select>
               </label>
-
-
-              <label  class="label_container_radio" value="henna">
-                <input type="radio" name="eyebrow_service" id="eyebrow_henna" value="henna" class="eyebrow_input">
-                <p class="label_checkbox_descricao">Design com henna</p>
+              <label for="cilios" class="select_label">
+                <p class="titulo_opcoes">Para Cílios</p>
+                <select name="cilios" id="eyelash_select" class="select_input">
+                  <option value="Nenhum">Nenhum Escolhido</option>
+                  <option value="Tufo_de_Seda">Tufo de Seda</option>
+                  <option value="Volume_Brasileiro">Volume Brasileiro</option>
+                  <option value="Volume_Egipcio">Volume Egípcio</option>
+                  <option value="Volume_Russo">Volume Russo</option>
+                  
+                </select>
               </label>
-
-
-              <label  class="label_container_radio" value="brown_lamination">
-                <input type="radio" name="eyebrow_service" id="eyebrow_lamination" value="brown_lamination" class="eyebrow_input">
-                <p class="label_checkbox_descricao"><lang lang="en">Brown lamination</lang></p>
-              </label>
-
 
             </section>
 
-            
-          </section> <!-- fim de design de sobrancelhas -->
-
-          <section class="info_servicos_container">
-            <h4 class="servicos_titulo_formulario">Extensão de Cílios</h4>
-            <section class="service_type_container">
-
-              <label  class="label_container_radio" value ='tufo_de_seda'>
-                <input type="radio" name="eyelash_service" id="eyelash_tuft" value ='tufo_de_seda'  class="eyelash_input">
-                <p class="label_checkbox_descricao">Tufo de seda</p>
-              </label>
-
-              <label  class="label_container_radio" value ='volume_brasileiro'>
-                <input type="radio" name="eyelash_service" id="eyelash_brasilian" value ='volume_brasileiro'  class="eyelash_input">
-                <p class="label_checkbox_descricao">Volume brasileiro</p>
-              </label>
-
-              <label  class="label_container_radio" value="volume_egpicio">
-                <input type="radio" name="eyelash_service" id="eyelash_egyptian" value="volume_egpicio"  class="eyelash_input">
-                <p class="label_checkbox_descricao">Volume egípcio</p>
-              </label>
-
-              <label class="label_container_radio" value="volume_russo">
-                <input type="radio" name="eyelash_service" id="eyelash_russian"  value="volume_russo" class="eyelash_input">
-                <p class="label_checkbox_descricao">Volume russo</p>
-              </label>
-              
-            </section>
-
-            <section class="footer_services_type_section">
-              <div class="button_reset">
-                <i class="bi bi-trash3"></i>
-                <p class="reset_description">Limpar escolhas</p>
-              </div>
-            </section>
-          </section> <!-- fim de extensão de cílios  -->
-
+            <div class="trigger_selec_input"></div>
+          </section> 
         </section><!-- fim de serviços -->
 
-        <section class="info_section">
+        <section class="info_section bookin_section_form">
           <header class="info_header">
             <i class="bi bi-calendar-week info_icone_titulo"></i>
             <h3 class="info_title">Agende seu horário</h3>
@@ -202,7 +172,7 @@
 
           <label for="calendar" class="label_container">
             <p class="label_description">Escolha a data</p>
-            <input type="date" name="calendar" id="calendar_input">
+            <input type="date" name="calendar" id="calendar_input" required>
             <div class="message_data"></div>
           </label>
 
@@ -225,19 +195,11 @@
                 <p class="button_time_description">Noite</p>
               </label>
             </div>
-            
 
-
-            <footer class="footer_horario_formulario">
-              <label for="allday" class="horario_label">
-                <p class="label_checkbox_description">Estou livre o dia todo</p>
-                <input type="checkbox" name="allday" id="time_allday">
-              </label>
-            </footer>
-
-            
           </section> <!-- fim de horarios -->
-          <section class="services_list"></section>
+
+          <section class="services_list">Período Escolhido:</section>
+
         </section><!-- fim de agendamento-->
 
         <section class="info_section obs_section">
@@ -252,17 +214,20 @@
             <textarea name="message" id="user_message" maxlength="100" class="message_user" placeholder="Explique se você tem alguma alergia ou dúvida sobre os serviços..."></textarea>
           </label>
 
-          <div class="counter_char_container" aria-hidden="true"></div>
+          <div class="counter_char_container" aria-hidden="true">0/100</div>
         </section> <!-- fim de observações-->
 
         <footer class="footer_formulario">
           <button class="button_submit" type="submit">
-            Agendar <i class="bi bi-whatsapp"></i></button>
+            Agendar <i class="bi bi-whatsapp"></i>
+          </button>
+
+          <div class="trigger_button_disable"></div>
         </footer>
 
         
 
-
+        
       </form>
 
 

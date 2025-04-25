@@ -179,23 +179,25 @@ footer {
 /* estilos do formulário de agendamento
 responsavel: cauã */
 .formulario_section{
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: space-between;
   width: 100%;}
 
 .formulario_container{
-  display: flex; flex-wrap: wrap; align-items: stretch;
-  width: 100%; max-width: 750px;
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
+  width: 100%; max-width: 1000px;
   gap: 1rem; padding: 1rem;
   border-radius: 1.8rem;
-  background-color: #ffe0e0;
+  background-color: transparent;
 }
 
 .info_section{
   display: flex; flex-direction: column; flex: 1 1 auto;
-  align-items: stretch;
+  align-items: stretch;;
   padding: 1rem;
   border: 1px solid #e8c0c0; border-radius: 1.25rem;
   background-color: white;
+  box-shadow: -4px 4px 6px #00000021;
 }
 
 .info_header{
@@ -254,63 +256,43 @@ responsavel: cauã */
 }
 
 /* ------------------ */
-
-.contador_servicos_container{
-  display: flex; flex-direction: column; place-items: start;
-  margin-bottom: 1rem;
-  width: 100%; }
-
-.contador_servicos{
-  width: 100%;
-  text-align: center; font-weight: bold; font-size: clamp(1.1rem, 1.1vw, 1.4rem);
-  margin-top: .8rem;
-  color: #d94f4f;}
-
-.servicos_titulo_formulario{
-  width: 100%; display: flex;
-  color: #d94f4f;
+.services_section_form{
+  max-width: 480px; width: 100%;
+  height: fit-content;
+}
+.info_servicos_container{
+  margin: 0;
+}
+.select_container{
+  display: flex; flex-wrap: wrap;
+  align-items: start; justify-content: space-between;
+  gap: 1rem;
 }
 
 .info_descricao{
   margin: -.5rem 0 1rem 0; font-size: clamp(.9rem, 1vw, 1.2rem);
 }
 
-.service_type_container{
-  display: flex; flex-wrap: wrap;
-  align-items: stretch; justify-content: start;
-  gap: 1rem; padding: .8rem 0;
-  margin-bottom: -1rem; border-bottom: 1px solid #f7b7b7;
-  
+.select_label{
+  display: flex; align-items: start; flex-direction: column;
+  gap: 0; width: 100%;
+}
+
+.titulo_opcoes{
+  flex: 1;
+  width: fit-content; text-wrap: nowrap;
+}
+.select_input{
+  flex: 2; width: 100%;
+  padding: .25rem .3rem;
+  border-radius: .5rem;
+  outline-color: #d94f4f; border: 1px solid #b33a3a;
 }
 
 
-.label_container_radio{
-  display: flex; flex-wrap: nowrap;
-  align-items: center; justify-content: space-between;
-  width: fit-content; gap: .5rem;
-  cursor: pointer;
-}
-
-
-.footer_services_type_section{
-  margin-top: 2rem; margin-bottom: -2rem;
-  display: flex; align-items: center; justify-content: end;
-}
-
-.button_reset{
-  display: flex; align-items: center; justify-content: center;
-  gap: .5rem;
-  padding: .5rem 1rem;
-  border-radius: 1.5rem;
-  cursor: pointer;
-  border: 1.5px solid #d94f4f; color: #d94f4f;
-  margin: 1rem 0;
-  font-size: clamp(.8rem, 1vw, 1rem); font-weight: 800;
-  transition: border color ease-in-out .4s;
-}
-
-.button_reset:hover{
-  border: 2px solid #c33535; color: #c33535;
+.bookin_section_form{
+  max-width: 500px;
+  margin: 0;
 }
 
 .horarios_container{
@@ -318,32 +300,7 @@ responsavel: cauã */
   align-items: start; justify-content: space-between;
 }
 
-/* estilos dinâmicos do js */
-.message_data.date_error{
-  color: #c50303; outline-color: #c50303 ;
-  border: 1px solid  #c50303;
-  background-color: #fb919152;
-  width: 100%; padding: .5rem; border-radius: .5rem;
-  font-weight: bold; font-size: clamp(12px, 1vw, 16px);
-}
 
-.message_data.date_warning{
-  color: #ca6c07;
-  border: 1px solid #ffaa00;
-  background-color: #f3c66da7;
-  width: 100%; padding: .5rem; border-radius: .5rem;
-  font-weight: bold; font-size: clamp(12px, 1vw, 16px);
-}
-
-.message_data.date_valid{
-  color: green;
-  border: 1px solid green;
-  background-color: #88f98872;
-  width: 100%; padding: .5rem; border-radius: .5rem;
-  font-weight: bold; font-size: clamp(12px, 1vw, 16px);
-}
-
-/*****************************************/
 
 .buttons_container{
   display: flex; flex-wrap: wrap;
@@ -388,11 +345,12 @@ responsavel: cauã */
   width: 100%; border-top: 1px solid #c3c1c1;
   padding: .5rem 0; margin-top: -1.5rem;
   font-size: clamp(.9rem, 1vw, 1.2rem);
+  margin: 0;
 }
 
 .obs_section{
   display: flex; flex-direction: column; align-items: start;
-  gap: .5rem;
+  gap: .5rem; margin: 0;
 }
 
 .message_label{
@@ -435,4 +393,50 @@ responsavel: cauã */
   border-radius: 1rem;
   cursor: pointer;
   font-size: .875rem; font-weight: bold;
+}
+
+
+
+
+/* estilos dinâmicos do js para mensagens de erro */
+.trigger_name.error, .trigger_tel.error, .trigger_selec_input.error, 
+.trigger_button_disable.error{
+  color: #c50303; outline-color: #c50303 ;
+  border: 1px solid  #c50303;
+  background-color: #fb919152;
+  width: 100%; padding: .5rem; border-radius: .5rem;
+  font-weight: bold; font-size: clamp(12px, 1vw, 16px);
+}
+
+.warning{
+  color: #ca6c07;
+  border: 1px solid #ffaa00;
+  background-color: #f3c66da7;
+  width: 100%; padding: .5rem; border-radius: .5rem;
+  font-weight: bold; font-size: clamp(12px, 1vw, 16px);
+}
+
+.trigger_name.valid, .trigger_tel.valid, .trigger_selec_input.valid, 
+.trigger_button_disable.valid{
+  color: green;
+  border: 1px solid green;
+  background-color: #88f98872;
+  width: 100%; padding: .5rem; border-radius: .5rem;
+  font-weight: bold; font-size: clamp(12px, 1vw, 16px);
+}
+
+/**** estilos dinamicos do js para containers conforme erro */
+.tel_input.error, .name_input.error{
+  border: 2px solid #c50303; outline-color: #c50303 ;
+  color: #c50303;
+}
+
+.warning{
+  color: #ca6c07; border: 2px solid #ffaa00;
+  outline-color: #ffaa00; 
+}
+
+.tel_input.valid, .name_input.valid{
+  color: green; border: 2px solid green;
+  outline-color: green;
 }
