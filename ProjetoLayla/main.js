@@ -1,4 +1,4 @@
-/* 
+/*
 
 1- pegar as informações para validação.
 2- depois de validar, salvar em uma variavel / localstorage 
@@ -606,7 +606,7 @@ window.addEventListener('load', ()=>{
             if (whatsapp_message.length > 0) { // Verifica se a mensagem foi montada corretamente
                 event.preventDefault(); 
     
-                let whatsapp_link = `https://api.whatsapp.com/send?phone=5571993342417&text=${encodeURIComponent(whatsapp_message)}`;
+                let whatsapp_link = `https://api.whatsapp.com/send?phone=5575981414418&text=${encodeURIComponent(whatsapp_message)}`;
                 
                 window.open(whatsapp_link, '_blank');
     
