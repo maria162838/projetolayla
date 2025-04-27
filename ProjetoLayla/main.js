@@ -13,6 +13,8 @@
 // variaveis globais 
 let variables_for_check = {};
 
+let daily_periods_copy = {};
+
 let data_user = {};
 
 
@@ -57,7 +59,7 @@ function toggle_warner_container(type, inputname)// altera UI conforme erro
 
 function transform_date_string(date){
     let dia_mes = date.getDate();
-    let dia_semana = dias_semana[dia_na_semana];
+    
     let mes = date.getMonth();
     let ano = date.getFullYear();
 
@@ -66,7 +68,117 @@ function transform_date_string(date){
     let dias_semana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira',
                        'quinta-feira', 'sexta-feira', 'sábado'];
 
+    let dia_semana = dias_semana[dia_na_semana];
+
     return `${dia_mes}/${mes}/${ano} - ${dia_semana}`
+}
+
+function transform_periodsList_toString(object){
+    let translate_toString = '';
+
+    for (let key in object){
+        translate_toString += `${object[key]} |`
+    }
+
+    return translate_toString
+}
+
+function trigger_submit_error(status) // mensagem de errosubmit
+{ 
+    let message_container = document.querySelector('.trigger_invalid_form');
+    if(status == 'limpar'){
+        message_container.classList.remove('error')
+    } else{
+        message_container.classList.add('error');
+        message_container.textContent = `Atenção! Você contém campos inválidos no formulário.
+                                         Por favor, preencha os campos corretamente e envie novamente.`
+    }
+}
+
+/**  FUNÇÃO DE TROCA DE TEMA **/
+function toggle_theme(theme){
+    let bodySite = document.querySelector('body');
+    let headerSite = document.querySelector('.header_site');
+    let menuButton = document.querySelectorAll('.menuSpan'); //array
+    let cardsServices = document.querySelectorAll('.card'); //array
+    let bgCarrossel = document.querySelector('.carrossel-duplo');
+    let cardsForm = document.querySelectorAll('.info_section')// array
+    let headersForm = document.querySelectorAll('.info_header'); //array
+    let titlesForm = document.querySelectorAll('.title_form'); //array
+    let titlesSection = document.querySelectorAll('.title_section'); //array
+    let navItems = document.querySelectorAll('.menu-navItem'); //array
+    let footerSite = document.querySelector('.footer_site');
+
+    if(theme == 'Escuro'){
+        // colocando tema escuro em quem não é array
+        bodySite.classList.add('dark_theme'); headerSite.classList.add('dark_theme');
+        footerSite.classList.add('dark_theme'); bgCarrossel.classList.add('dark_theme');
+
+        // colocando tema escuro em quem é array
+        menuButton.forEach(span =>{
+            span.classList.add('dark_theme')
+        });
+
+        cardsServices.forEach(card =>{
+            card.classList.add('dark_theme')
+        });
+
+        cardsForm.forEach(card =>{
+            card.classList.add('dark_theme')
+        });
+
+        titlesSection.forEach(title =>{
+            title.classList.add('dark_theme')
+        });
+
+        navItems.forEach(item =>{
+            item.classList.add('dark_theme');
+        });
+
+        headersForm.forEach(header =>{
+            header.classList.add('dark_theme');
+        });
+
+        titlesForm.forEach(title =>{
+            title.classList.add('dark_theme');
+        });
+
+    }else{
+        // colocando tema escuro em quem não é array
+        bodySite.classList.remove('dark_theme'); headerSite.classList.remove('dark_theme');
+        footerSite.classList.remove('dark_theme'); bgCarrossel.classList.remove('dark_theme');
+
+
+        // colocando tema escuro em quem é array
+        menuButton.forEach(span =>{
+            span.classList.remove('dark_theme')
+        });
+
+        cardsServices.forEach(card =>{
+            card.classList.remove('dark_theme')
+        });
+
+        cardsForm.forEach(card =>{
+            card.classList.remove('dark_theme')
+        });
+
+        titlesSection.forEach(title =>{
+            title.classList.remove('dark_theme')
+        });
+
+        navItems.forEach(item =>{
+            item.classList.remove('dark_theme');
+        });
+
+        headersForm.forEach(header =>{
+            header.classList.remove('dark_theme');
+        });
+
+        titlesForm.forEach(title =>{
+            title.classList.remove('dark_theme');
+        });
+    }
+
 }
 
 
@@ -90,16 +202,17 @@ function trigger_name(){
             trigger_warner_message('error', trigger_message, '.trigger_name');
             toggle_warner_container('error', '.trigger_name');
             checker_validation('name', 'invalid', '');
+            delete data_user[`${name}`]
 
-            delete data_user.nome;
+
 
         }else if(regex_rules.name_rules.test(name)){
             trigger_message = 'Nome válido.';
             trigger_warner_message('valid', trigger_message, '.trigger_name');
             toggle_warner_container('valid', '.name_input');
-            checker_validation('name', 'valid', '');
+
             
-            save_data('nome', name);
+            save_data('nome', `${name}`);
             
         } else{
             trigger_message = 'Atenção! Você digitou algo errado.'
@@ -107,7 +220,8 @@ function trigger_name(){
             toggle_warner_container('error', '.name_input');
             checker_validation('name', 'invalid', '');
 
-            delete data_user.nome;
+            delete data_user[`${name}`]
+
         }
     });        
     
@@ -132,7 +246,6 @@ function trigger_tel(){
             trigger_message = 'Atenção! Número curto demais.'
             trigger_warner_message('error', trigger_message, '.trigger_tel');
             toggle_warner_container('error', '.tel_input');
-            checker_validation('tel', 'invalid', '');
 
             delete data_user.telefone
 
@@ -140,7 +253,7 @@ function trigger_tel(){
             trigger_message = 'Número válido.'
             trigger_warner_message('valid', trigger_message, '.trigger_tel');
             toggle_warner_container('valid', '.tel_input');
-            checker_validation('tel', 'valid', '');
+
 
             save_data('telefone', tel);
 
@@ -208,6 +321,144 @@ function trigger_services(){
     
 };
 
+function trigger_data(){
+    let date_input = document.getElementById('calendar_input');
+    let getting_date_today = new Date();
+    let trigger_message = '';
+    let message_input = document.querySelector('.trigger_date')
+
+    date_input.addEventListener('change', (event) =>{
+        let date_event = new Date(event.target.value + 'T00:00:00');
+
+        // resetando a hora pra n dar erro com milisegundos
+        date_event.setHours(0, 0, 0, 0);
+        getting_date_today.setHours(0, 0, 0, 0);
+
+        // comparando as datas
+
+        if(date_event.getTime() < getting_date_today.getTime()){
+            //se sim quer dizer que a data já passou 
+            date_input.classList.add('error');
+            trigger_message = "Atenção! Esta data já passou.";
+            message_input.classList.add('error');
+
+            trigger_warner_message('error', trigger_message, '.trigger_date');
+            
+            delete data_user.Data
+
+
+        }else if ( date_event.getTime() === getting_date_today.getTime() ){
+            // escolha do dia atual como data de agendamento
+            date_input.classList.add('warning');
+            trigger_message = 'Cuidado! Você escolheu hoje, está muito próximo.';
+            message_input.classList.add('warning')
+
+            trigger_warner_message('warning', trigger_message, '.trigger_date');
+
+            delete data_user.Data
+
+
+        } else{
+            // data posterior a data atual do agendamento
+            date_input.classList.add('valid');
+            trigger_message = 'Data válida.';
+            message_input.classList.add('valid')
+
+            trigger_warner_message('valid', trigger_message, '.trigger_date');
+
+            // chamando função pra formatar a data em string
+            let date_user =  transform_date_string(date_event)
+
+            save_data('Data', date_user);
+        }
+
+
+    })
+}
+
+function trigger_day_periods(){
+    let dayily_periods_buttons = document.querySelectorAll('.input_time');
+    let message_input = document.querySelector('.trigger_daily_period');
+    let trigger_message = ''
+    let dayily_periods_list = {};
+    let day_period = ''
+    
+    dayily_periods_buttons.forEach(button =>{
+        button.addEventListener('change', () =>{
+            day_period = button.getAttribute('name')
+            let label = document.querySelector(`label[for="${day_period}"]`);
+
+            // conferindo se o botao ta checked pra adicionar à lista e a classe
+            if(button.checked){
+                // conferindo se ja não tem correspondencia pra evitar duplicatas
+                if(dayily_periods_list.hasOwnProperty(day_period)){
+                    day_period = ''
+                } else{
+                    dayily_periods_list[`${day_period}`] = true;
+                    label.classList.add('active')
+                };
+            }else{
+                delete dayily_periods_list[`${day_period}`];
+                label.classList.remove('active');
+            };
+
+
+            // validando para escolher pelo menos um período
+            if(Object.keys(dayily_periods_list).length === 0){
+                trigger_message = 'Atenção! Você precisa escolher pelo menos um período do dia.'
+                trigger_warner_message('error', trigger_message, '.trigger_daily_period');
+
+            } else{
+                trigger_message = 'Período(s) válido(s)!';
+                trigger_warner_message('valid', trigger_message, '.trigger_daily_period');
+
+                
+            };
+
+            // copoiando o objeto pra outro global 
+            daily_periods_copy = structuredClone(dayily_periods_list)
+
+
+        })
+    });
+
+    
+}
+
+function trigger_message_user(){
+    // vai contar quantos caracteres estão sendo escritos pelo usuario. 
+    // vai dar feedbackvisual quando chegar no limite máximo
+    let message_input = document.getElementById('user_message');
+    let counter_container = document.querySelector('.counter_char_container');
+    let max_length = message_input.getAttribute('maxlength');
+
+    message_input.addEventListener('input', () =>{
+        let message_user = message_input.value
+
+        if(message_user.length < max_length){
+            message_input.classList.remove('error');
+            counter_container.style.color = '#6f6e6e';
+            
+        } else if(message_user.length == max_length){
+            message_input.classList.add('error');
+            counter_container.style.color = '#c50303';
+
+        }
+        counter_container.textContent = `${message_user.length}/${max_length}`
+    }) ;
+
+    message_input.addEventListener('blur', (event) =>{
+        let userObs = event.target.value;
+
+        if(userObs.length < max_length && userObs != ''){
+            save_data('observação', `${userObs}`);
+        } else{
+            delete data_user["observação"]
+        }
+
+    })
+}
+
 
 
 // funções de validação exclusivamente: vão validar o input conforme a presença da chave
@@ -245,48 +496,140 @@ function validate_services(){
     }
 }
 
+function validate_date(){
+    let date_is_valid = data_user.hasOwnProperty('Data');
+
+    if(date_is_valid){
+        return 'valid'
+    } else{
+        return 'invalid'
+    }
+}
+
+function validate_daily_periods(){
+    let period_is_valid = Object.keys(daily_periods_copy).length
+
+    if(period_is_valid == 0){
+        return 'invalid'
+    } else{
+        return 'valid'
+    }
+}
 
 
-// chamando as funções conforme necessário 
+// começo do script
 
 window.addEventListener('load', ()=>{
-    trigger_name();
-    trigger_tel();
-    trigger_services();
+    // acionando os triggers de erro dos inputs
+    trigger_name(); trigger_tel(); trigger_services();
+    trigger_data(); trigger_day_periods(); trigger_message_user();
 
-    
 
-});
-    
+    // mostrando a confirmação da data ao usuário 
+    let display_date = document.querySelector('.data_confirmation_content');
 
-let button_submit = document.querySelector('.button_submit');
-let form = document.querySelector('.formulario_container')
+    let inputs_onChange = document.querySelectorAll('.input_onChange')
 
-    form.addEventListener('submit', (event) =>{
-        let data_user_lenght = Object.keys(data_user).length;
-
-        if(data_user_lenght < 6){
-            event.preventDefault();
-            // verificação manual de qual input está inválido
-            //input de nome
-            if(validate_name() === 'invalid'){
-                let section = document.querySelector('.name_input');
-                section.scrollIntoView({behavior: "smooth"});
-                section.focus();
-            } else if(validate_tel() === 'invalid'){
-                let section = document.querySelector('.tel_input');
-                section.scrollIntoView({behavior: "smooth"});
-                section.focus();
-            } else if(validate_services() === 'invalid'){
-                let section = document.querySelector('.services_section_form');
-                section.scrollIntoView({behavior: "smooth"});
-                section.focus();
+    inputs_onChange.forEach(input=>{
+        input.addEventListener('change', ()=>{
+            if(validate_date() === 'invalid' && validate_daily_periods() === 'invalid'){
+                display_date.textContent = ''
+            } else{
+                let date_toConfirm = data_user['Data'];
+                display_date.innerHTML = `Dia: ${date_toConfirm}<br> Períodos livres: ${Object.keys(daily_periods_copy)}`
             }
-        }     
+        });
 
     });
+
+    //pegando a confirmação do periodo para salvar no data_user
+    let confirm_button = document.getElementById('confirm_input');
+
+    confirm_button.addEventListener('change', () =>{
+        if(confirm_button.checked){
+            let periods_toString = '';
+            confirm_button.style.width = '20px';
     
+            for(let key in daily_periods_copy){
+                periods_toString += `${key}; ` 
+            };
+    
+            save_data('Período Livre', `${periods_toString}`)
+        };
+
+    })
 
 
 
+    // evento de submit do form
+    let button_submit = document.querySelector('.button_submit');
+    let form = document.querySelector('.formulario_container')
 
+    form.addEventListener('submit', (event) => {
+        let data_user_lenght = Object.keys(data_user).length;
+        let whatsapp_message = '';
+    
+        // Se os dados do usuário forem incompletos
+        if (data_user_lenght < 6) {
+            event.preventDefault(); // Previne o envio do form
+    
+            // Verificação de campos inválidos
+            if (validate_name() === 'invalid' || validate_tel() === 'invalid' || validate_services() === 'invalid' 
+                || validate_date() === 'invalid' || validate_daily_periods() === 'invalid') {
+                
+                trigger_submit_error(''); // Exibe a mensagem de erro
+            }
+        } else {
+            // Verificando se a mensagem do WhatsApp não está vazia
+            if(data_user['observação'] == undefined){
+                data_user['observação'] = 'Nenhuma observação.'
+            }
+            data_user['serviço de sobrancelha'] = data_user['serviço de sobrancelha'].replace('_', ' ');
+            data_user['serviço de cilios'] = data_user['serviço de cilios'].replace('_', ' ');
+
+            whatsapp_message = `Olá, meu nome é ${data_user.nome} e tenho interesse em: \n
+              - Serviço: Sobrencelha - ${data_user['serviço de sobrancelha']} | Cílio - ${data_user['serviço de cilios']} \n
+              - Data: ${data_user['Data']} \n
+              - Períodos do dia que estou livre: ${data_user['Período Livre']} \n
+              - Telefone para contato: ${data_user['telefone']} \n
+              - Observação: ${data_user['observação']}`;
+    
+            if (whatsapp_message.length > 0) { // Verifica se a mensagem foi montada corretamente
+                event.preventDefault(); 
+    
+                let whatsapp_link = `https://api.whatsapp.com/send?phone=5571993342417&text=${encodeURIComponent(whatsapp_message)}`;
+                
+                window.open(whatsapp_link, '_blank');
+    
+                // Reset completo do formulário e de dados do usuario 
+                trigger_submit_error('limpar');
+                form.reset();
+                data_user = {};
+            }
+        }
+    });
+
+
+    // alteração de tema do site 
+    let inputSelect = document.querySelector('.select_themeSite');
+    
+    inputSelect.addEventListener('change', (event) =>{
+        let selectValue = event.target.value;
+
+        if(selectValue == 'Escuro'){
+            toggle_theme('Escuro');
+            localStorage.setItem('theme', 'dark');
+        } else if(selectValue == 'Claro'){
+            toggle_theme('Claro');
+            localStorage.setItem('theme', 'light');
+
+        }
+    });
+
+    if(localStorage.getItem('theme') == 'Escuro'){
+        inputSelect.value = 'Escuro';
+    } else{
+        inputSelect.value = 'Claro'
+    };
+    
+});
