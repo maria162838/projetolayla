@@ -95,6 +95,92 @@ function trigger_submit_error(status) // mensagem de errosubmit
     }
 }
 
+/**  FUNÇÃO DE TROCA DE TEMA **/
+function toggle_theme(theme){
+    let bodySite = document.querySelector('body');
+    let headerSite = document.querySelector('.header_site');
+    let menuButton = document.querySelectorAll('.menuSpan'); //array
+    let cardsServices = document.querySelectorAll('.card'); //array
+    let bgCarrossel = document.querySelector('.carrossel-duplo');
+    let cardsForm = document.querySelectorAll('.info_section')// array
+    let headersForm = document.querySelectorAll('.info_header'); //array
+    let titlesForm = document.querySelectorAll('.title_form'); //array
+    let titlesSection = document.querySelectorAll('.title_section'); //array
+    let navItems = document.querySelectorAll('.menu-navItem'); //array
+    let footerSite = document.querySelector('.footer_site');
+
+    if(theme == 'Escuro'){
+        // colocando tema escuro em quem não é array
+        bodySite.classList.add('dark_theme'); headerSite.classList.add('dark_theme');
+        footerSite.classList.add('dark_theme'); bgCarrossel.classList.add('dark_theme');
+
+        // colocando tema escuro em quem é array
+        menuButton.forEach(span =>{
+            span.classList.add('dark_theme')
+        });
+
+        cardsServices.forEach(card =>{
+            card.classList.add('dark_theme')
+        });
+
+        cardsForm.forEach(card =>{
+            card.classList.add('dark_theme')
+        });
+
+        titlesSection.forEach(title =>{
+            title.classList.add('dark_theme')
+        });
+
+        navItems.forEach(item =>{
+            item.classList.add('dark_theme');
+        });
+
+        headersForm.forEach(header =>{
+            header.classList.add('dark_theme');
+        });
+
+        titlesForm.forEach(title =>{
+            title.classList.add('dark_theme');
+        });
+
+    }else{
+        // colocando tema escuro em quem não é array
+        bodySite.classList.remove('dark_theme'); headerSite.classList.remove('dark_theme');
+        footerSite.classList.remove('dark_theme'); bgCarrossel.classList.remove('dark_theme');
+
+
+        // colocando tema escuro em quem é array
+        menuButton.forEach(span =>{
+            span.classList.remove('dark_theme')
+        });
+
+        cardsServices.forEach(card =>{
+            card.classList.remove('dark_theme')
+        });
+
+        cardsForm.forEach(card =>{
+            card.classList.remove('dark_theme')
+        });
+
+        titlesSection.forEach(title =>{
+            title.classList.remove('dark_theme')
+        });
+
+        navItems.forEach(item =>{
+            item.classList.remove('dark_theme');
+        });
+
+        headersForm.forEach(header =>{
+            header.classList.remove('dark_theme');
+        });
+
+        titlesForm.forEach(title =>{
+            title.classList.remove('dark_theme');
+        });
+    }
+
+}
+
 
 
 
@@ -479,48 +565,71 @@ window.addEventListener('load', ()=>{
     let button_submit = document.querySelector('.button_submit');
     let form = document.querySelector('.formulario_container')
 
-    form.addEventListener('submit', (event) =>{
+    form.addEventListener('submit', (event) => {
         let data_user_lenght = Object.keys(data_user).length;
+        let whatsapp_message = '';
+    
+        // Se os dados do usuário forem incompletos
+        if (data_user_lenght < 6) {
+            event.preventDefault(); // Previne o envio do form
+    
+            // Verificação de campos inválidos
+            if (validate_name() === 'invalid' || validate_tel() === 'invalid' || validate_services() === 'invalid' 
+                || validate_date() === 'invalid' || validate_daily_periods() === 'invalid') {
+                
+                trigger_submit_error(''); // Exibe a mensagem de erro
+            }
+        } else {
+            // Verificando se a mensagem do WhatsApp não está vazia
+            if(data_user['observação'] == undefined){
+                data_user['observação'] = 'Nenhuma observação.'
+            }
+            data_user['serviço de sobrancelha'] = data_user['serviço de sobrancelha'].replace('_', ' ');
+            data_user['serviço de cilios'] = data_user['serviço de cilios'].replace('_', ' ');
 
-        if(data_user_lenght < 6){
-            event.preventDefault();
-            // verificação manual de qual input está inválido
-
-            if(validate_name === 'invalid' || validate_tel() === 'invalid' || validate_services() === 'invalid' 
-               || validate_date() === 'invalid' || validate_daily_periods()){
-
-                    trigger_submit_error('');
-               }
-        }else{
-            trigger_submit_error('limpar');
-        }     
-
+            whatsapp_message = `Olá, meu nome é ${data_user.nome} e tenho interesse em: \n
+              - Serviço: Sobrencelha - ${data_user['serviço de sobrancelha']} | Cílio - ${data_user['serviço de cilios']} \n
+              - Data: ${data_user['Data']} \n
+              - Períodos do dia que estou livre: ${data_user['Período Livre']} \n
+              - Telefone para contato: ${data_user['telefone']} \n
+              - Observação: ${data_user['observação']}`;
+    
+            if (whatsapp_message.length > 0) { // Verifica se a mensagem foi montada corretamente
+                event.preventDefault(); 
+    
+                let whatsapp_link = `https://api.whatsapp.com/send?phone=5571993342417&text=${encodeURIComponent(whatsapp_message)}`;
+                
+                window.open(whatsapp_link, '_blank');
+    
+                // Reset completo do formulário e de dados do usuario 
+                trigger_submit_error('limpar');
+                form.reset();
+                data_user = {};
+            }
+        }
     });
 
 
-});
-  
-
-
-
-
-
-
-let show_data = document.querySelector('.show_data')
-let display_data = document.querySelector('.display_data')
-let texto = ''
-
-show_data.addEventListener('click', () =>{
-    for (let key in data_user){
-        texto += `${key}: ${data_user[key]} | `
-    };
-
-    display_data.textContent = texto
-});
-
-
+    // alteração de tema do site 
+    let inputSelect = document.querySelector('.select_themeSite');
     
+    inputSelect.addEventListener('change', (event) =>{
+        let selectValue = event.target.value;
 
+        if(selectValue == 'Escuro'){
+            toggle_theme('Escuro');
+            localStorage.setItem('theme', 'dark');
+        } else if(selectValue == 'Claro'){
+            toggle_theme('Claro');
+            localStorage.setItem('theme', 'light');
 
+        }
+    });
 
-
+    if(localStorage.getItem('theme') == 'Escuro'){
+        inputSelect.value = 'Escuro';
+    } else{
+        inputSelect.value = 'Claro'
+    };
+    
+});

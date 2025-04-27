@@ -15,26 +15,38 @@
    <script src="main.js" defer></script>
 </head>
 <body>
-  <header>
+  <header class="header_site">
     <input type="checkbox" id="menu-toggle">
     <label for="menu-toggle" class="menu-hamburguer">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span class="menuSpan"></span>
+      <span class="menuSpan"></span>
+      <span class="menuSpan"></span>
     </label>
 
     <nav class="menu-nav">
       <ul>
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#servicos">Serviços</a></li>
-        <li><a href="#contato">Contato</a></li>
+        <li><a href="#sobre" class="menu-navItem">Sobre</a></li>
+        <li><a href="#servicos" class="menu-navItem">Serviços</a></li>
+        <li><a href="#contato" class="menu-navItem">Contato</a></li>
       </ul>
+
+        <!-- seção para alterar o tema do site -->
+      <aside class="theme_site">
+        <select name="theme" id="select_themeSite" class="select_themeSite">
+          <option>Selecione o tema</option>
+          <option value="Claro" class="theme_item">Tema claro</option>
+          <option value="Escuro" class="theme_item">Tema escuro</option>
+        </select>
+        
+      </aside>
     </nav>
+
+    
   </header>
 
   <main>
     <section id="sobre">
-      <h2>Sobre nós</h2>
+      <h2 class="title_section">Sobre nós</h2>
       <p>Sou especialista em design de sobrancelhas e extensão de cílios, com foco em técnicas modernas que valorizam a beleza natural de cada cliente. Meu trabalho é guiado por precisão, harmonia facial e um olhar atento aos detalhes que fazem toda a diferença.
 
         Atendo em um ambiente confortável e preparado para oferecer uma experiência personalizada, segura e acolhedora. Aqui, cada cliente é única — por isso, escuto com atenção suas preferências e expectativas para entregar um resultado que realce sua identidade, elevando sua autoestima com elegância e sutileza.
@@ -43,11 +55,11 @@
     </section>
 
     <section id="servicos">
-      <h2>Nossos Serviços</h2>
+      <h2 class="title_section">Nossos Serviços</h2>
       
       
       <div class="card">
-        <h3>Design de sobrancelhas</h3>
+        <h3 class="title_section">Design de sobrancelhas</h3>
         <ul>
           <li>Design simples</li>
           <li>Design com henna</li>
@@ -56,7 +68,7 @@
       </div>
 
       <div class="card">
-        <h3>Extensão de cílios</h3>
+        <h3 class="title_section">Extensão de cílios</h3>
         <ul>
           <li>Tufos de seda</li>
           <li>Volume brasileiro</li>
@@ -64,10 +76,35 @@
           <li>Volume russo</li>
         </ul>
       </div>
+
+        <section class="nosso trabalho ">
+          <h2 class="title_section">Galeria de serviços</h2>
+          <div class="subdocarrossel"><h3 class="title_section"> Sobrancelha: </h3>
+            <h3 class="title_section">Cílios:</h3></div>
+          
+        <div class="carrossel-duplo">
+          <div class="container-carrossel">
+            <div class="carrossel">
+              <img class="imagem" src="imagens/design-henna.jpg" alt="">
+              <img class="imagem" src="imagens/design-simples.jpg" alt="">
+              <img class="imagem" src="imagens/brow lamination.jpg" alt="">
+            </div>
+          </div> 
+        
+          <div class="container-carrossel">
+            <div class="carrossel">
+              <img class="imagem" src="imagens/tufos.jpg" alt="">
+              <img class="imagem" src="imagens/brasileiro.jpeg" alt="">
+              <img class="imagem" src="imagens/egipcios.jpeg" alt="">
+              <img class="imagem" src="imagens/volume-russo.jpg" alt="">
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
 
     <section id="contato">
-      <h2>Contato</h2>
+      <h2 class="title_section">Contato</h2>
       <p>Agende seu horário pelo WhatsApp ou nos siga no Instagram para acompanhar meu trabalho!</p>
     
       <a class="botao" href="https://wa.me/seunumero" target="_blank">
@@ -238,36 +275,10 @@
       
      </section> <!-- fim da seção de formulário -->
 
-     <div class="teste_salvamento_usuario">
-      <button class="show_data">Mostrar User Data</button>
-      <span class="display_data"></span>
-     </div>
+     
 
-
-     </section>
-     <section class="nosso trabalho ">
-      <h2>Galeria de serviços</h2>
-      <div class="subdocarrossel"><h3> Sobrancelha: </h3>
-        <h3>Cílios:</h3></div>
-      
-     <div class="carrossel-duplo">
-      <div class="container-carrossel">
-        <div class="carrossel">
-          <img class="imagem" src="imagens/design-henna.jpg" alt="">
-          <img class="imagem" src="imagens/design-simples.jpg" alt="">
-          <img class="imagem" src="imagens/brow lamination.jpg" alt="">
-        </div>
-      </div> 
-    
-      <div class="container-carrossel">
-        <div class="carrossel">
-          <img class="imagem" src="imagens/tufos.jpg" alt="">
-          <img class="imagem" src="imagens/brasileiro.jpeg" alt="">
-          <img class="imagem" src="imagens/egipcios.jpeg" alt="">
-          <img class="imagem" src="imagens/volume-russo.jpg" alt="">
-        </div>
-      </div>
-    </div>
-  </section>
+     
 
     </main>
+
+    <footer class="footer_site"></footer>
