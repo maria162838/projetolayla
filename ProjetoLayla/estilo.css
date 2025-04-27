@@ -146,6 +146,8 @@ display: flex;
 gap: 330px;
 justify-content: center;
 }
+
+.title_carrossel{ text-align: center;}
 .card {
   background-color: #fff2f2;
   padding: 15px;
