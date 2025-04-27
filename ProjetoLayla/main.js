@@ -107,6 +107,7 @@ function toggle_theme(theme){
     let titlesForm = document.querySelectorAll('.title_form'); //array
     let titlesSection = document.querySelectorAll('.title_section'); //array
     let navItems = document.querySelectorAll('.menu-navItem'); //array
+    let testimonialCards = document.querySelectorAll('.testimonial-card'); //array
     let footerSite = document.querySelector('.footer_site');
 
     if(theme == 'Escuro'){
@@ -143,6 +144,10 @@ function toggle_theme(theme){
             title.classList.add('dark_theme');
         });
 
+        testimonialCards.forEach(card =>{
+            card.classList.add('dark_theme');
+        });
+
     }else{
         // colocando tema escuro em quem não é array
         bodySite.classList.remove('dark_theme'); headerSite.classList.remove('dark_theme');
@@ -176,6 +181,10 @@ function toggle_theme(theme){
 
         titlesForm.forEach(title =>{
             title.classList.remove('dark_theme');
+        });
+
+        testimonialCards.forEach(card =>{
+            card.classList.remove('dark_theme');
         });
     }
 
