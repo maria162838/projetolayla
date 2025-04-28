@@ -18,7 +18,6 @@ body {
   background-color: #fffaf9;
   color: #333;
   line-height: 1.6;
-  padding-bottom: 50px;
   position: relative;
 }
 
@@ -104,7 +103,7 @@ body {
   display: flex;
   align-items: center;
   min-height: 95vh;
-  background: url(../ProjetoLayla/imagens/layla.jpg) no-repeat;
+  background: url('imagens/layla.jpg') no-repeat;
   background-size: cover;
   background-position: center;
 }
@@ -530,7 +529,7 @@ body.dark_theme, .carrossel-duplo.dark_theme
 .header_site.dark_theme, .card.dark_theme, .testimonial-card.dark_theme
 { background-color:#1f1f20; color:#f2f2f2;}
 
-.info_section.dark_theme{
+.info_section.dark_theme, .footer_site.dark_theme{
   background-color:#1f1f20; color:#f2f2f2;
   border-color: #2b2b2d; box-shadow: -4px 4px 14px #00000082;
 }
@@ -540,8 +539,14 @@ body.dark_theme, .carrossel-duplo.dark_theme
 
 .menuSpan{background-color: #f2f2f2;}
 
-<<<<<<< HEAD
-.footer-principal {
+
+
+
+
+
+
+/* maria - footer */
+.footer_site {
   background-color: #e7acac;
   color: white;
   padding: 40px 20px;
@@ -579,6 +584,4 @@ body.dark_theme, .carrossel-duplo.dark_theme
 .footer-politicas li:hover {
 text-decoration: underline;
 }
-=======
 
->>>>>>> 9f864e2fbf57459f84632e39579ad418c3ecca80
