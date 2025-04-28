@@ -13,43 +13,8 @@
     .menu-nav{ margin-top: 40px; margin-bottom: 20px;}
   };
 
-  @media screen and (min-width: 768px) and (max-width: 991px) {
-    /* Estilos para tablets */
-
-
+  @media screen and (min-width: 930px) and (max-width: 1028px){
+    .formulario_container{
+      flex-direction: column;
+    }
   };
-
-  @media screen and (min-width: 992px) and (max-width: 1199px) {
-    /* Estilos para notebooks e desktops médios */
-
-    
-  };
-
-  @media screen and (min-width: 1200px) {
-    /* Estilos para telas grandes, desktops widescreen */
-
-
-  };
-  
-  
-
-  
-  
-  
-
-
-
-
-
-
-
-
-
-
-/* tamanhos específicos 
--> caso precise refinar algum ajuste, coloque o tamanho aqui */
-
-@media screen and (min-width: 988px) and (max-width: 1028px){
-    .formulario_container{flex-direction: column;}
-
-}
