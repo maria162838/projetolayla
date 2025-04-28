@@ -424,7 +424,7 @@ responsavel: cauã */
 /*-----*/
 .obs_section{
   display: flex; flex-direction: column; align-items: start;
-  gap: .5rem; margin: 0; width: 100%; max-width: 470px; min-width: 430px;
+  gap: .5rem; margin: 0; width: 100%;
 }
 
 .message_label{
