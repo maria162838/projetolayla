@@ -19,6 +19,7 @@ body {
   color: #333;
   line-height: 1.6;
   position: relative;
+  overflow-x: hidden;
 }
 
 .header_site{
@@ -264,7 +265,7 @@ responsavel: cauã */
   display: flex; flex-direction: column; flex: 1 1 auto;
   align-items: stretch; justify-content: space-between;
   padding: 1rem;
-  max-width: 470px; min-width: 380px;
+  max-width: 470px; min-width: 300px;
   border: 1px solid #e8c0c0; border-radius: 1.25rem;
   background-color: white;
   box-shadow: -4px 4px 6px #00000021;
