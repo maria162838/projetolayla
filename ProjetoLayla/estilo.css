@@ -273,7 +273,7 @@ responsavel: cauã */
 
 .info_header{
   display: flex; align-items: stretch; justify-content: start;
-  gap: .5rem; padding: 0; margin: 0;
+  gap: .5rem; padding: 0; margin: 0 0 .5rem 0;
   width: 100%;
   font-size: clamp(1rem, 1.2rem, 1.4rem);
   background-color: transparent; color: #d94f4f;
