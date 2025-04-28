@@ -100,6 +100,15 @@ body {
   place-self: flex-end; outline-color: #ee3939;
 }
 
+.first-section {
+  display: flex;
+  align-items: center;
+  min-height: 95vh;
+  background: url(../ProjetoLayla/imagens/layla.jpg) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
 main {
   padding: 20px;
 }
