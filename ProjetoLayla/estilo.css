@@ -525,3 +525,42 @@ body.dark_theme, .carrossel-duplo.dark_theme
 {color:#f2f2f2}
 
 .menuSpan{background-color: #f2f2f2;}
+
+.footer-principal {
+  background-color: #e7acac;
+  color: white;
+  padding: 40px 20px;
+}
+
+.footer-container{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-container a {
+  text-decoration: none;
+}
+
+.footer-container ul{
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-container li{
+  margin-bottom: 10px;
+}
+
+.footer-nav li, 
+.footer-contato li,
+.footer-politicas li{
+  cursor: pointer;
+}
+
+.footer-nav li:hover,
+.footer-contato li:hover,
+.footer-politicas li:hover {
+text-decoration: underline;
+}
